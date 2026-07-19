@@ -4,11 +4,11 @@
 
 # About app:
 
-## You can here observing:
+## Here you can observing:
 
 🌒 Moon Phases
 
-📄 Weelky News From Space
+📄 Weekly News From Space
 
 🌙 Weekly Weather Forecast On The Night
 
