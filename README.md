@@ -4,7 +4,7 @@
 
 # About app:
 
-## We can here observing:
+## You can here observing:
 
 🌒 Moon Phases
 
