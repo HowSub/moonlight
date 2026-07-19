@@ -12,6 +12,9 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   flutter_launcher_icons: ^0.14.4
+  go_router: ^17.3.0
+  firebase_core: ^4.12.1
+  flutter_native_splash: ^2.4.8
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "347162232270",
+    "project_id": "moolight-3218d",
+    "storage_bucket": "moolight-3218d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347162232270:android:e85269b39fd12aa235179f",
+        "android_client_info": {
+          "package_name": "com.example.login"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsD-t1IG0YqpH6cSA3gRl1Nt87vAGj9V0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347162232270:android:df30a1808c9a0a7235179f",
+        "android_client_info": {
+          "package_name": "com.subdevelopment.moonlight"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsD-t1IG0YqpH6cSA3gRl1Nt87vAGj9V0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
