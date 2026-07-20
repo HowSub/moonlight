@@ -26,6 +26,7 @@ class _RegisterState extends State<RegisterScreen> {
 
   bool _isShow = true;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
