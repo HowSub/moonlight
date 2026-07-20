@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:login/core/theme.dart';
-import 'package:login/features/register/register_screen.dart';
+import 'package:login/core/routes/app_router.dart';
 
-class LoginUI extends StatelessWidget {
-  const LoginUI({super.key});
+import 'package:login/core/theme.dart';
+
+class Moonlight extends StatelessWidget {
+  const Moonlight({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, theme: darkTheme, home: RegisterScreen());
+    return MaterialApp.router(debugShowCheckedModeBanner: false, routerConfig: appRouter, theme: darkTheme);
   }
 }

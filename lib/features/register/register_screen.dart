@@ -1,6 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:login/features/register/widgets/rich_text_link.dart';
+import 'package:go_router/go_router.dart';
 import 'package:login/features/register/widgets/signup_button.dart';
 import 'package:login/features/register/widgets/with_google_button.dart';
 
@@ -15,7 +16,6 @@ class _RegisterState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-
     _initializeApp();
   }
 
@@ -25,10 +25,6 @@ class _RegisterState extends State<RegisterScreen> {
   }
 
   bool _isShow = true;
-
-  dynamic emailController;
-  dynamic passwordController;
-  dynamic repeatPasswordController;
 
   @override
   Widget build(BuildContext context) {
@@ -70,15 +66,15 @@ class _RegisterState extends State<RegisterScreen> {
                             fontWeight: .w600,
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
 
                         emailInput(),
 
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
 
                         passwordField(),
 
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 20),
 
                         repeatPasswordField(),
 
@@ -92,7 +88,25 @@ class _RegisterState extends State<RegisterScreen> {
 
                         SizedBox(height: 20),
 
-                        richTextLink(),
+                        RichText(
+                          text: TextSpan(
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: .w600,
+                            ),
+                            children: [
+                              TextSpan(text: 'Already have an account? '),
+                              TextSpan(
+                                style: TextStyle(color: Colors.blue),
+                                text: 'Sign In',
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    context.go('/login');
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -109,7 +123,6 @@ class _RegisterState extends State<RegisterScreen> {
 
   TextField emailInput() {
     return TextField(
-      controller: emailController,
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
@@ -133,7 +146,6 @@ class _RegisterState extends State<RegisterScreen> {
 
   TextField passwordField() {
     return TextField(
-      controller: passwordController,
       obscureText: _isShow,
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
@@ -167,7 +179,6 @@ class _RegisterState extends State<RegisterScreen> {
 
   TextField repeatPasswordField() {
     return TextField(
-      controller: repeatPasswordController,
       obscureText: _isShow,
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),

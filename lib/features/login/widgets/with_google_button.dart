@@ -14,7 +14,7 @@ SizedBox withGoogleButton() {
             Image.asset('assets/images/google_logo.png', width: 32, height: 32),
             const SizedBox(width: 10),
             const Text(
-              'Sign Up Google',
+              'Sign In Google',
               style: TextStyle(color: Color(0xFF002A4D)),
             ),
           ],
