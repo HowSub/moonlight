@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:login/features/login/widgets/signin_button.dart';
+import 'package:login/core/service/auth_service.dart';
 import 'package:login/features/login/widgets/with_google_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +16,20 @@ class _LoginScreen extends State<LoginScreen> {
   void initState() {
     super.initState();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
+  final AuthService _authService = AuthService();
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _isShow = true;
 
@@ -61,11 +75,18 @@ class _LoginScreen extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 20),
 
-                        emailInput(),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              emailInput(_emailController),
 
-                        const SizedBox(height: 20),
+                              const SizedBox(height: 20),
 
-                        passwordField(),
+                              passwordField(_passwordController),
+                            ],
+                          ),
+                        ),
 
                         const SizedBox(height: 30),
 
@@ -110,8 +131,18 @@ class _LoginScreen extends State<LoginScreen> {
 
   // METHODS
 
-  TextField emailInput() {
-    return TextField(
+  TextFormField emailInput(TextEditingController controller) {
+    return TextFormField(
+      controller: controller,
+      validator: (value) {
+        if (value == null ||
+            value.isEmpty ||
+            !value.contains('@') ||
+            !value.contains('.')) {
+          return 'Invalid email';
+        }
+        return null;
+      },
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
@@ -121,6 +152,11 @@ class _LoginScreen extends State<LoginScreen> {
         prefixIcon: Icon(Icons.email, color: Colors.white),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
@@ -133,8 +169,18 @@ class _LoginScreen extends State<LoginScreen> {
     );
   }
 
-  TextField passwordField() {
-    return TextField(
+  TextFormField passwordField(TextEditingController controller) {
+    return TextFormField(
+      controller: controller,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Enter password';
+        }
+        if (value.length < 6) {
+          return 'At least 6 characters';
+        }
+        return null;
+      },
       obscureText: _isShow,
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
@@ -154,6 +200,11 @@ class _LoginScreen extends State<LoginScreen> {
         prefixIcon: Icon(Icons.lock, color: Colors.white),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
@@ -162,6 +213,27 @@ class _LoginScreen extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
         ),
+      ),
+    );
+  }
+
+  SizedBox signInButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            String email = _emailController.text.trim().toLowerCase();
+            String password = _passwordController.text.trim().toLowerCase();
+
+            try {
+              await _authService.signIn(email, password);
+            } catch (e) {
+              SnackBar(content: Text(e.toString()));
+            }
+          }
+        },
+        child: const Text('SignIn', style: TextStyle(color: Color(0xFF002A4D))),
       ),
     );
   }

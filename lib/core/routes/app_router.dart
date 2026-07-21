@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:login/features/home/home_screen.dart';
+import 'package:login/core/service/auth_gate.dart';
 import 'package:login/features/login/login_screen.dart';
 import 'package:login/features/register/register_screen.dart';
 
@@ -11,6 +11,6 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
-    GoRoute(path: '/', builder: (context, state) => HomeScreen(),)
+    GoRoute(path: '/', builder: (context, state) => AuthGate()),
   ],
 );

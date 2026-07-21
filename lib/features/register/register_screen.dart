@@ -2,17 +2,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
-import 'package:login/features/register/widgets/signup_button.dart';
+import 'package:login/core/service/auth_service.dart';
 import 'package:login/features/register/widgets/with_google_button.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  const RegisterScreen({super.key,});
 
   @override
   State<RegisterScreen> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<RegisterScreen> {
+  // LOADING SPLASH SCREEN
   @override
   void initState() {
     super.initState();
@@ -24,8 +25,24 @@ class _RegisterState extends State<RegisterScreen> {
     FlutterNativeSplash.remove();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+
+    _emailController.dispose();
+    _passwordController.dispose();
+    _repeatedPassword.dispose();
+  }
+
+  final _formKey = GlobalKey<FormState>();
+
+  final AuthService _authService = AuthService();
+
   bool _isShow = true;
 
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _repeatedPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,15 +86,25 @@ class _RegisterState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 20),
 
-                        emailInput(),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              emailField(_emailController),
 
-                        const SizedBox(height: 20),
+                              const SizedBox(height: 20),
 
-                        passwordField(),
+                              passwordField(_passwordController),
 
-                        const SizedBox(height: 20),
+                              const SizedBox(height: 20),
 
-                        repeatPasswordField(),
+                              repeatPasswordField(
+                                _repeatedPassword,
+                                _passwordController,
+                              ),
+                            ],
+                          ),
+                        ),
 
                         const SizedBox(height: 30),
 
@@ -122,8 +149,18 @@ class _RegisterState extends State<RegisterScreen> {
 
   // METHODS
 
-  TextField emailInput() {
-    return TextField(
+  TextFormField emailField(TextEditingController controller) {
+    return TextFormField(
+      controller: controller,
+      validator: (value) {
+        if (value == null ||
+            value.isEmpty ||
+            !value.contains('@') ||
+            !value.contains('.')) {
+          return 'Invalid email';
+        }
+        return null;
+      },
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
@@ -133,6 +170,11 @@ class _RegisterState extends State<RegisterScreen> {
         prefixIcon: Icon(Icons.email, color: Colors.white),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
@@ -145,8 +187,18 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  TextField passwordField() {
-    return TextField(
+  TextFormField passwordField(TextEditingController controller) {
+    return TextFormField(
+      controller: controller,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Enter password';
+        }
+        if (value.length < 6) {
+          return 'At least 6 characters';
+        }
+        return null;
+      },
       obscureText: _isShow,
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
@@ -166,6 +218,11 @@ class _RegisterState extends State<RegisterScreen> {
         prefixIcon: Icon(Icons.lock, color: Colors.white),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
@@ -178,27 +235,35 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  TextField repeatPasswordField() {
-    return TextField(
-      obscureText: _isShow,
+  TextFormField repeatPasswordField(
+    TextEditingController controller,
+    TextEditingController password,
+  ) {
+    return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Repeat password';
+        }
+        if (value != password.text) {
+          return "Passwords don't match";
+        }
+      },
+      controller: controller,
+      obscureText: true,
       cursorColor: Colors.white,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: 'Repeat password...',
         label: Text('Repeat Password', style: TextStyle(color: Colors.white)),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: IconButton(
-          onPressed: () => setState(() {
-            _isShow = !_isShow;
-          }),
-          icon: Icon(
-            _isShow ? Icons.visibility_off : Icons.visibility,
-            color: Colors.white,
-          ),
-        ),
         prefixIcon: Icon(Icons.lock, color: Colors.white),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
@@ -207,6 +272,27 @@ class _RegisterState extends State<RegisterScreen> {
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
         ),
+      ),
+    );
+  }
+
+  SizedBox signUpButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            String email = _emailController.text.trim().toLowerCase();
+            String password = _passwordController.text.trim().toLowerCase();
+
+            try {
+              await _authService.signUp(email, password);
+            } catch (e) {
+              SnackBar(content: Text(e.toString()));
+            }
+          }
+        },
+        child: const Text('SignUp', style: TextStyle(color: Color(0xFF002A4D))),
       ),
     );
   }
