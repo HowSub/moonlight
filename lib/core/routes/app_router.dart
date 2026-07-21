@@ -1,16 +1,47 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:login/core/service/auth_gate.dart';
+import 'package:login/features/home/home_screen.dart';
 import 'package:login/features/login/login_screen.dart';
 import 'package:login/features/register/register_screen.dart';
 
+class RouterSettings extends ChangeNotifier {
+  late final StreamSubscription<User?> _subscription;
+
+  RouterSettings() {
+    _subscription = FirebaseAuth.instance.authStateChanges().listen((user) {notifyListeners();});
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
+
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
+  refreshListenable: RouterSettings(),
+  redirect: (context, state) {
+    final bool loggedIn = FirebaseAuth.instance.currentUser != null;
+    final bool isAuthScreen = state.matchedLocation == '/login' || state.matchedLocation == '/register';
+
+    if(!loggedIn && !isAuthScreen) {
+      return '/login';
+    }
+    if(loggedIn && isAuthScreen) {
+      return '/';
+    }
+    return null;
+  },
   routes: [
     GoRoute(
       path: '/register',
       builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(path: '/login', builder: (context, state) => LoginScreen()),
-    GoRoute(path: '/', builder: (context, state) => AuthGate()),
+    GoRoute(path: '/', builder: (context, state) => HomeScreen()),
   ],
 );

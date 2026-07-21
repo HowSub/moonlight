@@ -29,9 +29,13 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'invalid-credential':
+          throw 'Invalid credential';
+
         case 'user-not-found':
+          throw 'User not found';
+
         case 'wrong-password':
-          throw 'Invalid email or password';
+          throw 'Invalid password';
 
         case 'user-disabled':
           throw 'This account was banned';
@@ -42,13 +46,6 @@ class AuthService {
         default:
           throw 'Something went wrong: ${e.message}';
       }
-    }
-  }
-  Future<void> signOut() async {
-    try {
-      await _auth.signOut();
-    } on FirebaseAuthException catch(e) {
-      throw 'Something went wrong. Try later';
     }
   }
 }
