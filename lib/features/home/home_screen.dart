@@ -8,10 +8,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: dateText(),
         leadingWidth: 200,
-        backgroundColor: Color(0xFF000B4B),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
           IconButton(
             onPressed: () {},
@@ -20,6 +22,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
@@ -32,6 +35,8 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 100),
+
               moonPhases(),
 
               const SizedBox(height: 20),

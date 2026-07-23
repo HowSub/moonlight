@@ -221,6 +221,7 @@ class _LoginScreen extends State<LoginScreen> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             String email = _emailController.text.trim().toLowerCase();

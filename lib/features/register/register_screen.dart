@@ -6,7 +6,7 @@ import 'package:login/core/service/auth_service.dart';
 import 'package:login/features/register/widgets/with_google_button.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key,});
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterState();
@@ -280,6 +280,7 @@ class _RegisterState extends State<RegisterScreen> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             String email = _emailController.text.trim().toLowerCase();
