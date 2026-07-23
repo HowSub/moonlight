@@ -21,9 +21,11 @@ class RouterSettings extends ChangeNotifier {
   }
 }
 
+final RouterSettings _routerSettings = RouterSettings();
+
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
-  refreshListenable: RouterSettings(),
+  refreshListenable: _routerSettings,
   redirect: (context, state) {
     final bool loggedIn = FirebaseAuth.instance.currentUser != null;
     final bool isAuthScreen = state.matchedLocation == '/login' || state.matchedLocation == '/register';

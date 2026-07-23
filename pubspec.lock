@@ -248,6 +248,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.1"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: "1ca20c894b1717686a2319b8548763d812bc0aabdac580420a44c5178c57a867"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.20.3"
   json_annotation:
     dependency: transitive
     description:
@@ -320,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  moon_phase:
+    dependency: "direct main"
+    description:
+      name: moon_phase
+      sha256: "52e0b3f97fea18888b1ed3087a179f9d18cdf8479d7253b5ee00a35437d861bd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   path:
     dependency: transitive
     description:
