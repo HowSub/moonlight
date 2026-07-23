@@ -3,7 +3,13 @@ import 'package:login/features/home/widgets/data_text.dart';
 import 'package:login/features/home/widgets/moon_phases.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final List<String> _weeklyImages = [
+    'assets/images/weekly_news/image_1.jpg',
+    'assets/images/weekly_news/image_2.jpg',
+    'assets/images/weekly_news/image_3.jpg',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +45,34 @@ class HomeScreen extends StatelessWidget {
 
               moonPhases(),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
 
-              Text('Weekly news', style: TextStyle(fontSize: 20)),
-
-              const SizedBox(height: 20),
+              Container(
+                height: 250,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Image.asset(_weeklyImages[index], height: 220),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      SizedBox(width: 20),
+                  itemCount: _weeklyImages.length,
+                ),
+              ),
             ],
           ),
         ),

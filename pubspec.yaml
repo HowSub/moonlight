@@ -39,6 +39,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/moon_phases/
+    - assets/images/weekly_news/
 
   fonts:
     - family: StackSans
