@@ -140,7 +140,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 4.0),
                                       Text(
-                                        'Читать подробнее...',
+                                        'Read more...',
                                         style: TextStyle(
                                           fontSize: 12.0,
                                           color: Colors.white.withOpacity(0.6),
