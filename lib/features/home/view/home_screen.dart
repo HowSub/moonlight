@@ -1,55 +1,37 @@
-import 'dart:ui'; // 👈 ОБЯЗАТЕЛЬНО: добавили для работы ImageFilter.blur
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:login/features/home/widgets/data_text.dart';
-import 'package:login/features/home/widgets/moon_phases.dart';
+import 'package:login/core/ui/main_decoration.dart';
+import 'package:login/features/home/model/weekly_model.dart';
+import 'package:login/features/home/view/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final List<String> _weeklyImages = [
-    'assets/images/weekly_news/image_1.jpg',
-    'assets/images/weekly_news/image_2.jpg',
-    'assets/images/weekly_news/image_3.jpg',
-  ];
-
-  // Создадим временный список заголовков, чтобы у каждой карточки был свой текст
-  final List<String> _newsTitles = [
-    'The best places for observation',
-    '3I/Atlas flew past the sun',
-    'Perseid meteor shower in 2026',
+    final List<WeeklyModel> weeklyNews = [
+    WeeklyModel(
+      imagePath: 'assets/images/weekly_news/image_1.jpg',
+      title: 'The best places for observation',
+    ),
+    WeeklyModel(
+      imagePath: 'assets/images/weekly_images/image_2.jpg',
+      title: '3I/ATLAS passed by the Sun',
+    ),
+    WeeklyModel(
+      imagePath: 'assets/images/weekly_images/image_3.jpg',
+      title: 'Perseid Meteor Shower 2026',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: dateText(),
-        leadingWidth: 200,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.account_circle,
-              size: 40,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
+      appBar: homeAppBar,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF000e5e), Color(0xFF141C48), Color(0xFF485A6E)],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-        ),
+        decoration: mainDecoration,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -59,19 +41,17 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 40),
 
-              // Блок горизонтальных Glassmorphism карточек
               Container(
-                height:
-                    280, // немного увеличили высоту, чтобы поместился и текст, и картинка
+                height: 280,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemCount: _weeklyImages.length,
+                  itemCount: weeklyNews.length,
                   separatorBuilder: (BuildContext context, int index) =>
                       const SizedBox(width: 20),
                   itemBuilder: (BuildContext context, int index) {
+                    final news = weeklyNews[index];
                     return Container(
-                      width:
-                          320, // 👈 Задаем фиксированную ширину для горизонтальной карточки
+                      width: 320,
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
@@ -82,14 +62,9 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          20.0,
-                        ), // Скругляем саму стеклянную карточку
+                        borderRadius: BorderRadius.circular(20.0),
                         child: BackdropFilter(
-                          filter: ImageFilter.blur(
-                            sigmaX: 10.0,
-                            sigmaY: 10.0,
-                          ), // 👈 Эффект размытия
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(
@@ -97,31 +72,26 @@ class HomeScreen extends StatelessWidget {
                               ), // Полупрозрачный белый фон стекла
                               borderRadius: BorderRadius.circular(20.0),
                               border: Border.all(
-                                color: Colors.white.withOpacity(
-                                  0.2,
-                                ), // Тонкий отблеск на гранях
+                                color: Colors.white.withOpacity(0.2),
                                 width: 1.5,
                               ),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // 1. Картинка внутри карточки (скруглены только верхние углы)
                                 ClipRRect(
                                   borderRadius: const BorderRadius.vertical(
                                     top: Radius.circular(18.0),
                                   ),
                                   child: Image.asset(
-                                    _weeklyImages[index],
+                                    news.imagePath,
                                     height:
                                         200, // Высота картинки внутри карточки
                                     width: double.infinity,
-                                    fit: BoxFit
-                                        .cover, // Картинка аккуратно заполнит верхнюю часть
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
 
-                                // 2. Заголовок новости под картинкой
                                 Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
@@ -129,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        _newsTitles[index], // Заголовок из нашего списка
+                                        news.title, // Заголовок из нашего списка
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(

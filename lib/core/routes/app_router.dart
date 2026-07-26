@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:login/features/home/home_screen.dart';
-import 'package:login/features/login/login_screen.dart';
-import 'package:login/features/register/register_screen.dart';
+import 'package:login/features/auth/login/login.dart';
+import 'package:login/features/auth/register/register.dart';
+import 'package:login/features/home/home.dart';
 
 class RouterSettings extends ChangeNotifier {
   late final StreamSubscription<User?> _subscription;

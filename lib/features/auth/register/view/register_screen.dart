@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:login/core/service/auth_service.dart';
-import 'package:login/features/register/widgets/with_google_button.dart';
+import 'package:login/features/auth/login/view/widgets/with_google_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

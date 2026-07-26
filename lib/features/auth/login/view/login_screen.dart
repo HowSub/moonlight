@@ -2,7 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:login/core/service/auth_service.dart';
-import 'package:login/features/login/widgets/with_google_button.dart';
+import 'package:login/core/ui/main_decoration.dart';
+import 'package:login/features/auth/login/view/widgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -33,6 +34,10 @@ class _LoginScreen extends State<LoginScreen> {
 
   bool _isShow = true;
 
+  bool getIsShow() {
+    return _isShow;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +47,7 @@ class _LoginScreen extends State<LoginScreen> {
         height: double.infinity,
 
         padding: EdgeInsets.symmetric(horizontal: 30.0),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF000e5e), Color(0xFF141C48), Color(0xFF485A6E)],
-            begin: AlignmentGeometry.topRight,
-            end: AlignmentGeometry.bottomLeft,
-          ),
-        ),
+        decoration: mainDecoration,
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
@@ -131,43 +130,7 @@ class _LoginScreen extends State<LoginScreen> {
 
   // METHODS
 
-  TextFormField emailInput(TextEditingController controller) {
-    return TextFormField(
-      controller: controller,
-      validator: (value) {
-        if (value == null ||
-            value.isEmpty ||
-            !value.contains('@') ||
-            !value.contains('.')) {
-          return 'Invalid email';
-        }
-        return null;
-      },
-      cursorColor: Colors.white,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: 'example@gmail.com',
-        label: Text('Email', style: TextStyle(color: Colors.white)),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        prefixIcon: Icon(Icons.email, color: Colors.white),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-        hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-      ),
-    );
-  }
+  
 
   TextFormField passwordField(TextEditingController controller) {
     return TextFormField(
@@ -213,28 +176,6 @@ class _LoginScreen extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
         ),
-      ),
-    );
-  }
-
-  SizedBox signInButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-        onPressed: () async {
-          if (_formKey.currentState!.validate()) {
-            String email = _emailController.text.trim().toLowerCase();
-            String password = _passwordController.text.trim().toLowerCase();
-
-            try {
-              await _authService.signIn(email, password);
-            } catch (e) {
-              SnackBar(content: Text(e.toString()));
-            }
-          }
-        },
-        child: const Text('SignIn', style: TextStyle(color: Color(0xFF002A4D))),
       ),
     );
   }
