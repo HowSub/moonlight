@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:login/core/service/auth_service.dart';
-import 'package:login/features/auth/login/view/widgets/with_google_button.dart';
+import 'package:login/features/auth/register/view/widgets/widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -149,44 +149,6 @@ class _RegisterState extends State<RegisterScreen> {
 
   // METHODS
 
-  TextFormField emailField(TextEditingController controller) {
-    return TextFormField(
-      controller: controller,
-      validator: (value) {
-        if (value == null ||
-            value.isEmpty ||
-            !value.contains('@') ||
-            !value.contains('.')) {
-          return 'Invalid email';
-        }
-        return null;
-      },
-      cursorColor: Colors.white,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: 'example@gmail.com',
-        label: Text('Email', style: TextStyle(color: Colors.white)),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        prefixIcon: Icon(Icons.email, color: Colors.white),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-        hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-      ),
-    );
-  }
-
   TextFormField passwordField(TextEditingController controller) {
     return TextFormField(
       controller: controller,
@@ -215,47 +177,6 @@ class _RegisterState extends State<RegisterScreen> {
             color: Colors.white,
           ),
         ),
-        prefixIcon: Icon(Icons.lock, color: Colors.white),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-        hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: const Color(0xFFFD5E52)),
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        errorStyle: TextStyle(color: Color(0xFFFD5E52)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-      ),
-    );
-  }
-
-  TextFormField repeatPasswordField(
-    TextEditingController controller,
-    TextEditingController password,
-  ) {
-    return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Repeat password';
-        }
-        if (value != password.text) {
-          return "Passwords don't match";
-        }
-      },
-      controller: controller,
-      obscureText: true,
-      cursorColor: Colors.white,
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: 'Repeat password...',
-        label: Text('Repeat Password', style: TextStyle(color: Colors.white)),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
         prefixIcon: Icon(Icons.lock, color: Colors.white),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
         hintStyle: TextStyle(color: const Color.fromARGB(121, 255, 255, 255)),

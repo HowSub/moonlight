@@ -130,8 +130,6 @@ class _LoginScreen extends State<LoginScreen> {
 
   // METHODS
 
-  
-
   TextFormField passwordField(TextEditingController controller) {
     return TextFormField(
       controller: controller,
@@ -176,6 +174,28 @@ class _LoginScreen extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(20.0),
           borderSide: BorderSide(color: Colors.white),
         ),
+      ),
+    );
+  }
+
+  SizedBox signInButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            String email = _emailController.text.trim().toLowerCase();
+            String password = _passwordController.text.trim().toLowerCase();
+
+            try {
+              await _authService.signIn(email, password);
+            } catch (e) {
+              SnackBar(content: Text(e.toString()));
+            }
+          }
+        },
+        child: const Text('SignIn', style: TextStyle(color: Color(0xFF002A4D))),
       ),
     );
   }
