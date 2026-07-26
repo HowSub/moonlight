@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login/core/routes/app_router.dart';
+import 'package:moonlight/core/routes/app_router.dart';
 
-import 'package:login/core/ui/theme.dart';
+import 'package:moonlight/core/ui/theme.dart';
 
 class Moonlight extends StatelessWidget {
   const Moonlight({super.key});

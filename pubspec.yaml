@@ -1,5 +1,5 @@
-name: login
-description: "Login UI"
+name: moonlight
+description: "App for observing"
 publish_to: 'none'
 version: 1.0.0+1
 

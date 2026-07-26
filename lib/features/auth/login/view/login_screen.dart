@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:login/core/service/auth_service.dart';
-import 'package:login/core/ui/main_decoration.dart';
-import 'package:login/features/auth/login/view/widgets/widgets.dart';
+import 'package:moonlight/core/service/auth_service.dart';
+import 'package:moonlight/core/ui/main_decoration.dart';
+import 'package:moonlight/features/auth/login/view/widgets/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
