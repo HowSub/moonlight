@@ -195,7 +195,10 @@ class _LoginScreen extends State<LoginScreen> {
             }
           }
         },
-        child: const Text('SignIn', style: TextStyle(color: Color(0xFF002A4D))),
+        child: const Text(
+          'Sign In',
+          style: TextStyle(color: Color(0xFF002A4D)),
+        ),
       ),
     );
   }

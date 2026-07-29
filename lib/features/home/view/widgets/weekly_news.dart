@@ -48,7 +48,7 @@ Container weeklyNews() {
                       ),
                       child: Image.asset(
                         news.imagePath,
-                        height: 200, // Высота картинки внутри карточки
+                        height: 200, 
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),

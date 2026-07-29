@@ -40,6 +40,7 @@ flutter:
     - assets/images/
     - assets/images/moon_phases/
     - assets/images/weekly_news/
+    - assets/images/weekly_weather_forecast/
 
   fonts:
     - family: StackSans

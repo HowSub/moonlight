@@ -214,7 +214,10 @@ class _RegisterState extends State<RegisterScreen> {
             }
           }
         },
-        child: const Text('SignUp', style: TextStyle(color: Color(0xFF002A4D))),
+        child: const Text(
+          'Sign Up',
+          style: TextStyle(color: Color(0xFF002A4D)),
+        ),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moonlight/features/home/view/widgets/data_text.dart';
+import 'package:moonlight/features/home/view/widgets/moon_phase/date_text.dart';
 
 final AppBar homeAppBar = AppBar(
   leading: dateText(),
